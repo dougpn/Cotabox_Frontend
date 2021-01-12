@@ -52,7 +52,9 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Typescript](https://www.typescriptlang.org/)
 - [React](https://pt-br.reactjs.org/)
 - [React Bootstrap](https://react-bootstrap.github.io/)
+- [Bootstrap](https://getbootstrap.com/)
 - [React Minimal Pie Chart](https://www.npmjs.com/package/react-minimal-pie-chart)
+- [Jest](https://jestjs.io/en/)
 
 ### Autor
 
