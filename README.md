@@ -14,7 +14,7 @@
 </h4>
 
 <p align="center">
-<img width= "250" src="./Screenshots/1.jpeg" />
+<img width= "250" src="./Screenshots/1.png" />
 </p>
 
 ### Funções
