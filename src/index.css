@@ -14,8 +14,7 @@ span {
 body,
 html,
 .App,
-#root,
-.auth-wrapper {
+#root {
   width: 100%;
   height: 100%;
 }
