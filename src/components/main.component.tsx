@@ -135,9 +135,10 @@ export default function Main() {
               { title: 'Three', value: 20, color: getRandomColor() }
             ]}
             radius={3}
-            viewBoxSize={[10, 8]}
+            viewBoxSize={[10, 7]}
             center={[5, 3]}
             segmentsShift={0.02}
+            lineWidth={25}
           />
         </Col>
       </Row>
