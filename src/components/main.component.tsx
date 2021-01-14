@@ -1,15 +1,43 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { PieChart } from 'react-minimal-pie-chart'
 
+interface IPart {
+  _id: number
+  firstname: string
+  lastname: [string]
+  participation: number
+}
+const defaultProps: IPart[] = []
+
 export default function Main() {
+  const [part, setPart]: [IPart[], (part: IPart[]) => void] = React.useState(
+    defaultProps
+  )
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [participation, setParticipation] = useState('')
+  const [isOpen1, setIsOpen1] = useState(false)
+  const [isOpen2, setIsOpen2] = useState(false)
 
+  const showModal1 = () => {
+    setIsOpen1(true)
+  }
+  const showModal2 = () => {
+    setIsOpen2(true)
+    setFirstname('')
+    setLastname('')
+    setParticipation('')
+  }
+  const hideModal = () => {
+    setIsOpen1(false)
+    setIsOpen2(false)
+  }
   function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('')
     var color = '#'
@@ -19,7 +47,7 @@ export default function Main() {
     return color
   }
 
-  /*const requestOptions = {
+  const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -28,20 +56,50 @@ export default function Main() {
       participation: participation
     })
   }
-  const clickHandler = (event: MouseEvent) => {
-    event.preventDefault()
-    fetch('http://localhost:3300/participation', requestOptions)
+  const clickHandler = () => {
+    if (!firstname || !lastname || !participation) {
+      showModal1()
+      return
+    } else {
+      fetch('http://localhost:3300/participation', requestOptions)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('Houve um erro')
+          } else {
+            response.json()
+          }
+        })
+        .then(() => showModal2())
+    }
+  }
+  async function clickHandler2() {
+    await axios
+      .post<IPart[]>('http://localhost:3300/findpart')
       .then((response) => {
-        if (response.status !== 200) {
-          showModal()
-          throw new Error('Houve um erro')
-        } else {
-          response.json()
-        }
+        setPart(response.data)
       })
-  }*/
+  }
+
   return (
     <div className='container bg-light'>
+      <Modal show={isOpen1} onHide={hideModal}>
+        <Modal.Header>
+          <Modal.Title>Olá</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Nenhum campo pode ser vazio.</Modal.Body>
+        <Modal.Footer>
+          <button onClick={hideModal}>Cancel</button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={isOpen2} onHide={hideModal}>
+        <Modal.Header>
+          <Modal.Title>Olá</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Dados gravados com sucesso!</Modal.Body>
+        <Modal.Footer>
+          <button onClick={hideModal}>Cancel</button>
+        </Modal.Footer>
+      </Modal>
       <nav className='navbar navbar-expand-lg fixed-top bg-info'>
         <div className='container'>
           <div className='collapse navbar-collapse' id='navbarTogglerDemo02'>
@@ -81,8 +139,21 @@ export default function Main() {
                 />
               </li>
               <li className='nav-item' style={{ padding: '5px' }}>
-                <button type='submit' className='btn btn-primary btn-block'>
+                <button
+                  type='submit'
+                  className='btn btn-primary btn-block'
+                  onClick={clickHandler}
+                >
                   Enviar
+                </button>
+              </li>
+              <li className='nav-item' style={{ padding: '5px' }}>
+                <button
+                  type='submit'
+                  className='btn btn-primary btn-block'
+                  onClick={clickHandler2}
+                >
+                  Ver
                 </button>
               </li>
             </ul>
@@ -106,34 +177,24 @@ export default function Main() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <td key={index}>Table cell {index}</td>
-                ))}
-              </tr>
-              <tr>
-                <td>2</td>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <td key={index}>Table cell {index}</td>
-                ))}
-              </tr>
-              <tr>
-                <td>3</td>
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <td key={index}>Table cell {index}</td>
-                ))}
-              </tr>
+              {part.map((par, index) => (
+                <tr>
+                  <td key={par._id}>{index + 1}</td>
+                  <td key={par._id}>{par.firstname}</td>
+                  <td key={par._id}>{par.lastname}</td>
+                  <td key={par._id}>{par.participation}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         </Col>
         <Col>
           <PieChart
-            data={[
-              { title: 'One', value: 10, color: getRandomColor() },
-              { title: 'Two', value: 15, color: getRandomColor() },
-              { title: 'Three', value: 20, color: getRandomColor() }
-            ]}
+            data={part.map((par) => ({
+              title: par.firstname,
+              value: par.participation,
+              color: getRandomColor()
+            }))}
             radius={3}
             viewBoxSize={[10, 7]}
             center={[5, 3]}
