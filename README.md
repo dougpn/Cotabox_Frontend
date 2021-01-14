@@ -19,7 +19,7 @@
 
 ### Funções
 
-- [ ] Cadastro de pessoas e suas participações
+- [x] Cadastro de pessoas e suas participações
 - Mais funções em breve...
 
 ### Pré-requisitos
