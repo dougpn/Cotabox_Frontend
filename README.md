@@ -64,7 +64,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
  <sub><b>Douglas Neves</b></sub></a> <a href="https://github.com/dougpn" ></a>
 
 
-Feito com ❤️ por Douglas Neves 👋🏽 Entre em contato!
+Feito por Douglas Neves 👋🏽 Entre em contato!
 
 [![Linkedin Badge](https://img.shields.io/badge/-Douglas-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/douglaspneves/)](https://www.linkedin.com/in/douglaspneves/) 
 [![Gmail Badge](https://img.shields.io/badge/-nevesdouglasp@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:nevesdouglasp@gmail.com)](mailto:nevesdouglasp@gmail.com)
